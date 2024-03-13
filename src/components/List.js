@@ -15,6 +15,7 @@ const List = ({
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedAmount, setEditedAmount] = useState(amount);
 
+  // 삭제
   const handleClick = (id) => {
     let newPocketData = pocketData.filter((data) => data.id !== id);
     setPocketData(newPocketData);
@@ -29,6 +30,7 @@ const List = ({
     }
   };
 
+  // 수정
   const handleSubmit = () => {
     let newPocketData = pocketData.map((data) => {
       if (data.id === id) {

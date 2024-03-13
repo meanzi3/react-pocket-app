@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Form({
-  handleSubmit,
+  handleSaveSubmit,
   title,
   setTitle,
   amount,
@@ -16,7 +16,7 @@ export default function Form({
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSaveSubmit}
       className="flex flex-col pt-2 justify-between"
     >
       <div className="flex mb-4 justify-between">
