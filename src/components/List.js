@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { MdOutlineModeEdit } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 
 const List = ({
   id,
@@ -62,13 +64,13 @@ const List = ({
         <div className="flex">
           <button
             onClick={handleSubmit}
-            class="px-4 py-2 float-right"
+            className="px-4 py-2 float-right"
             type="submit"
           >
             save
           </button>
           <button
-            class="px-4 py-2 float-right"
+            className="px-4 py-2 float-right"
             onClick={() => setIsEditing(false)}
             type="button"
           >
@@ -96,11 +98,11 @@ const List = ({
             <span>{amount}</span>
           </div>
           <div className="flex">
-            <button className="px-4 py-2" onClick={() => setIsEditing(true)}>
-              edit
+            <button className="px-3 py-2" onClick={() => setIsEditing(true)}>
+              <MdOutlineModeEdit />
             </button>
-            <button className="px-4 py-2" onClick={() => handleClick(id)}>
-              x
+            <button className="px-3 py-2" onClick={() => handleClick(id)}>
+              <MdDeleteForever />
             </button>
           </div>
         </div>
