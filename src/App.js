@@ -11,7 +11,7 @@ function App() {
   const [pocketData, setPocketData] = useState(initialPocketData);
 
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +42,21 @@ function App() {
     localStorage.setItem("pocketData", JSON.stringify([]));
   };
 
+  // 리스트의 금액 합계 계산
+  const calculateTotalAmount = () => {
+    let totalAmount = 0;
+
+    // 각 항목의 금액을 합산
+    pocketData.forEach((item) => {
+      totalAmount += item.amount;
+    });
+
+    return totalAmount;
+  };
+
+  // 총 금액 계산
+  const totalAmount = calculateTotalAmount();
+
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-blue-100">
       <h1 className="mb-4 text-2xl">예산 계산기</h1>
@@ -62,6 +77,11 @@ function App() {
             모두 삭제
           </button>
         </div>
+      </div>
+      <div>
+        <h2 className="mb-4 text-xl">
+          총 지출: {totalAmount.toLocaleString()}원
+        </h2>
       </div>
     </div>
   );
