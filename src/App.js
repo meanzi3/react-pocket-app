@@ -1,23 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import Lists from "./components/Lists";
+import Form from "./components/Form";
+
+const initialPocketData = localStorage.getItem("pocketData")
+  ? JSON.parse(localStorage.getItem("pocketData"))
+  : [];
 
 function App() {
+  const [pocketData, setPocketData] = useState(initialPocketData);
+
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 새로운 거래 데이터
+    let newPocket = {
+      id: Date.now(),
+      title: title,
+      amount: parseFloat(amount),
+    };
+
+    // 원래 있던 거래에 새로운 거래 더해주기
+    setPocketData((prev) => [...prev, newPocket]);
+    localStorage.setItem(
+      "pocketData",
+      JSON.stringify([...pocketData, newPocket])
+    );
+
+    // 입력란에 있던 내용 초기화
+    setTitle("");
+    setAmount("");
+
+    e.target.blur();
+  };
+
+  const handleRemoveClick = () => {
+    setPocketData([]);
+    localStorage.setItem("pocketData", JSON.stringify([]));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col items-center justify-center w-screen h-screen bg-blue-100">
+      <h1 className="mb-4 text-2xl">예산 계산기</h1>
+      <div className="w-full p-6 m-4 bg-white rounded shadow md:w-3/4 md:max-w-lg lg:w-3/4 lg:max-w-lg">
+        <Form
+          handleSubmit={handleSubmit}
+          title={title}
+          setTitle={setTitle}
+          amount={amount}
+          setAmount={setAmount}
+        />
+        <Lists pocketData={pocketData} setPocketData={setPocketData} />
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handleRemoveClick}
+            className="p-2 text-blue-400 border-2 border-blue-400 rounded hover:text-white hover:bg-blue-200"
+          >
+            모두 삭제
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
